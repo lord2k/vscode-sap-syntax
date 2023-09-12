@@ -1,5 +1,5 @@
 {
-  "name": "sap-syntax",
+  "name": "vscode-sap-syntax",
   "displayName": "SAP Syntax",
   "description": "SAP Files Syntax Highlighting",
   "version": "0.2.1",
@@ -7,7 +7,6 @@
     "vscode": ">=0.9.0-pre.1"
   },
   "author": "Lars Kalms",
-  "publisher": "larsk",
   "icon": "img/sap.png",
   "categories": [
     "Programming Languages"
@@ -104,7 +103,6 @@
     ]
   },
   "__metadata": {
-    "installedTimestamp": 1693814339977,
     "publisherDisplayName": "Lars Kalms"
   }
 }
