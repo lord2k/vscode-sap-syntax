@@ -1,108 +1,71 @@
 {
-  "name": "SilentInstaller Menu",
-  "file_extensions": [
-    "menu"
+  "name": "SilentInstallerLog",
+  "scopeName": "source.sapinst.menu",
+  "patterns": [
+    { "include": "#comment" },
+    {
+      "match": "(CRITICAL)(=)(.+)",
+      "captures": {
+        "1": { "name": "keyword.sapinst.menu" },
+        "2": { "name": "keyword.operator.comparision.sapinst.menu" },
+        "3": { "name": "string.sapinst.menu" }
+      }
+    },
+    { "include": "#landscape" },
+    { "include": "#params" },
+    { "include": "#instType" },
+    { "include": "#desc" }
   ],
-  "scope": "source.sapinst",
-  "variables": {
-    "instType": ",?\\s*(?:(?:([\\w\\*]+[\\/])((?:BOBJ|COMMON)\\/ProcessDefinitions\\/)?|)|(\\w+__))?(\\S+)?\\s*",
-    "desc": "(?:,\\s*([\\w\\s()\\.\\-\\/\\+\\|]*))?",
-    "params": "(?:,\\s*([\\w\\*\\^\\\\]*))?\\s*",
-    "comment": "(\\s*\\#.*)?"
-  },
-  "contexts": {
-    "main": [
-      {
-        "match": "\\$\\[(\\w+)\\]",
-        "captures": {
-          "1": "string.sapinst.menu"
+  "repository": {
+    "comment": {
+      "patterns": [
+        {
+          "match": "\\s*###.*$",
+          "name": "comment.strong.sapinst.menu markup.bold"
+        },
+        {
+          "match": "#.*$",
+          "name": "comment.sapinst.menu markup.italic"
         }
-      },
-      {
-        "match": "(CRITICAL)=(.+)",
-        "captures": {
-          "1": "keyword.sapinst.menu",
-          "2": "string.sapinst.menu"
-        }
-      },
-      {
-        "match": "(?x)\n^\\s*([CDQPT]+)\\s*{{params}}{{params}}{{desc}}{{comment}}$",
-        "captures": {
-          "1": "keyword.sapinst.menu",
-          "2": "variable.sapinst.menu",
-          "3": "variable.alternate.sapinst.menu",
-          "4": "string.sapinst.menu",
-          "5": "comment.sapinst.menu"
-        }
-      },
-      {
-        "match": "(?x)\n^\\s*([CDQPT]+)\\s*{{instType}}{{desc}}{{params}}{{params}}{{params}}{{comment}}$",
-        "captures": {
-          "1": "keyword.sapinst.menu",
-          "2": "entity.other.attribute-name.sapinst.menu",
-          "3": "variable.sapinst.menu",
-          "4": "variable.sapinst.menu",
-          "5": "variable.alternate.sapinst.menu",
-          "6": "string.sapinst.menu",
-          "7": "variable.sapinst.menu",
-          "8": "variable.sapinst.menu",
-          "9": "variable.sapinst.menu",
-          "10": "comment.sapinst.menu"
-        }
-      },
-      {
-        "match": "(?x)\n^\\s*([CDQPT]+)\\s*{{instType}}{{desc}}{{params}}{{params}}{{params}}{{comment}}$",
-        "captures": {
-          "1": "keyword.sapinst.menu markup.italic",
-          "2": "entity.other.attribute-name.sapinst.menu markup.italic",
-          "3": "variable.sapinst.menu markup.italic",
-          "4": "variable.sapinst.menu markup.italic",
-          "5": "variable.alternate.sapinst.menu markup.italic",
-          "6": "string.sapinst.menu markup.italic",
-          "7": "variable.sapinst.menu markup.italic",
-          "8": "variable.sapinst.menu markup.italic",
-          "9": "variable.sapinst.menu markup.italic",
-          "10": "comment.sapinst.menu markup.italic"
-        }
-      },
-      {
-        "match": "\\s*###.*$",
-        "scope": "comment.strong.sapinst.menu markup.bold"
-      },
-      {
-        "match": "#.*$",
-        "scope": "comment.sapinst.menu markup.italic"
-      },
-      {
-        "match": "\"(?=.+\")",
-        "push": "stringDouble"
-      },
-      {
-        "match": "\\'(?=.+\\')",
-        "push": "stringSingle"
+      ]
+    },
+    "landscape": {
+      "match": "^\\s*([CDQPT]+)\\s*(,)",
+      "captures": {
+        "1": { "name": "keyword.sapinst.menu" },
+        "2": { "name": "punctuation.comma.sapinst.menu" }
       }
-    ],
-    "stringDouble": [
-      {
-        "meta_scope": "string.quoted.double.sapinst.menu"
-      },
-      {
-        "match": "\\\\.",
-        "scope": "constant.character.escape.sapinst.menu"
-      },
-      {
-        "match": "\"",
-        "pop": true
+    },
+    "instType": {
+      "match": "([\\w*]+[\\/])((?:BOBJ|COMMON)\\/ProcessDefinitions\\/)?([\\w\\.]+)?",
+      "captures": {
+        "1": { "name": "meta.landscape support.function.builtin.sapinst.menu" },
+        "2": { "name": "meta.process support.variable.sapinst.menu" },
+        "3": { "name": "meta.process variable.other.sapinst.menu" },
+        "4": { "name": "punctuation.comma.sapinst.menu" }
       }
-    ],
-    "stringSingle": [
-      {
-        "meta_scope": "string.quoted.single.sapinst.menu"
-      },
-      {
-        "match": "\\'",
-        "pop": true
+
+    },
+    "desc": {
+      "match": "(,)\\s*(.*)?",
+      "captures": {
+        "1": { "name": "punctuation.comma.sapinst.menu" },
+        "2": { "name": "meta.description string.unquoted.sapinst.menu",
+      "patterns":[
+        {"include": "#params"}
+      ] }
       }
-    ]
+    },
+    "params": {
+      "match": "\\s*(,)\\s*(\\S*)\\s*(,)\\s*(\\S*)\\s*(,)\\s*(\\S*)$",
+      "captures": {
+        "1": { "name": "punctuation.comma.sapinst.menu" },
+        "2": { "name": "meta.params variable.sapinst.menu" },
+        "3": { "name": "punctuation.comma.sapinst.menu" },
+        "4": { "name": "meta.params variable.sapinst.menu" },
+        "5": { "name": "punctuation.comma.sapinst.menu" },
+        "6": { "name": "meta.params variable.sapinst.menu" }
+      }
+    }
   }
 }
