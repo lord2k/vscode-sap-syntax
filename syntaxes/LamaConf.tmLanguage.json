@@ -1,0 +1,96 @@
+{
+  "name": "LamaConf",
+  "scopeName": "source.lama.conf",
+  "patterns": [
+    {
+      "explanation": "Name",
+      "match": "\\s*(Name\\s*:)\\s*(\\w+)",
+      "captures": {
+        "1": { "name": "keyword" },
+        "2": { "name": "constant.character.escape markup.bold" }
+      }
+    },
+    {
+      "explanation": "Description",
+      "match": "\\s*(Description\\s*:)\\s*([\\w\\s]+)",
+      "captures": {
+        "1": { "name": "keyword" },
+        "2": { "name": "string" }
+      }
+    },
+    { "begin": "=?'", "end": "'", "name": "string.quoted.single" },
+    { "begin": "=?\"", "end": "\"", "name": "string.quoted.double" },
+    { "match": "/?(\\S+/)+\\S*", "name": "string.path" },
+    {
+      "explanation": "Keyword",
+      "match": "^\\s*(\\w+:)",
+      "captures": { "1": { "name": "keyword" } }
+    },
+    {
+      "explanation": "XM",
+      "name": "source.lama.conf",
+      "contentName": "XM.Params",
+      "begin": "(--executionModule)\\s*(\\w+)\\s",
+      "end": "$",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name" },
+        "2": { "name": "constant.character.escape" }
+      },
+      "patterns": [
+        { "include": "#Params" }
+      ]
+    },
+    { "include": "#Params" },
+    {
+      "explanation": "environment markers",
+      "match": ".+(perl|bash|python|[ckz]?sh)\\s*",
+      "captures": {
+        "1": { "name": "entity.name.selector" }
+      }
+    },
+    {
+      "explanation": "Params",
+      "match": "-[^\\s=]+",
+      "name": "entity.other.attribute-name"
+    },
+    { "match": "#.*", "name": "comment.line.number-sign" }
+  ],
+  "repository": {
+    "Params": {
+      "patterns": [
+        { "include": "#ParameterSimple" },
+        { "include": "#ParameterLamaLong" },
+        { "include": "#ParameterLamaShort" }
+      ]
+    },
+    "ParameterSimple": {
+      "explanation": "Params Simple",
+      "match": "([\\w\\-]+)\\s*([=\\s])\\s*(\\w+)",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name markup.italic" },
+        "2": { "name": "keyword.operator.comparison" },
+        "3": { "name": "variable.parameter" }
+      }
+    },
+    "ParameterLamaShort": {
+      "explanation": "Params with $[<val>:<name>?=#required]",
+      "match": "(?:\\$\\[([\\w\\-]*):?([\\w\\-]+)?(=)?((?:#\\w+)*)\\s*\\])",
+      "captures": {
+        "1": { "name": "variable.parameter" },
+        "2": { "name": "entity.other.attribute-name markup.italic" },
+        "3": { "name": "keyword.operator.comparison" },
+        "4": { "name": "constant.character.escape" }
+      }
+    },
+    "ParameterLamaLong": {
+      "explanation": "XM Params with <name>=$[]",
+      "match": "([\\w\\-]+)\\s*(=)\\s*\\$\\[([\\w\\-]+(:(?:#\\w+))?)\\s*\\]",
+      "captures": { 
+        "1": { "name": "entity.other.attribute-name markup.italic" },
+        "2": { "name": "keyword.operator.comparison" },
+        "3": { "name": "variable.parameter" },
+        "4": { "name": "constant.character.escape" }
+      }
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "name": "SilentInstallerLog",
+  "scopeName": "source.sapinst.log",
+  "patterns": [
+    { "include": "#transferParams" },
+    { "include": "#processDefinitions" },
+    { "include": "#perl" },
+    { "include": "source.sapinst.process#stringDouble" },
+    { "include": "source.sapinst.process#stringSingle" },
+    { "include": "source.sapinst.process#placeholder" },
+    { "include": "source.sapinst.process#condition" },
+    { "include": "#logline" }
+  ],
+  "repository": {
+    "logline": {
+      "match": "(\\d{4}-\\d{2}-\\d{2}\\s(?:\\d{2}\\:?){3})\\s*\\[(?:(error)|(\\w+))\\]\\s*\\[(\\d+)\\]\\[(\\d+)\\](?:(\\[[\\w:]+\\]:))?((\\[[\\w:]+\\])+)?",
+      "captures": {
+        "1": { "name": "meta.date keyword.sapinst.log" },
+        "2": { "name": "meta.severity invalid.keyword.sapinst.log" },
+        "3": { "name": "meta.severity variable.sapinst.log" },
+        "4": { "name": "meta.thread constant.character.escape.sapinst.log" },
+        "5": { "name": "meta.pid constant.character.escape.sapinst.log" },
+        "6": { "name": "meta.lvm string.unquoted.sapinst.log" },
+        "7": { "name": "meta.perlmod support.function.builtin.sapinst.log" },
+        "8": { "name": "meta.perlmod entity.function.parameter.sapinst.log" }
+      }
+    },
+    "date": {
+      "match": "(\\d{4}-\\d{2}-\\d{2}\\s(?:\\d{2}\\:?){3})",
+      "name": "date keyword.sapinst.log"
+    },
+    "perl": {
+      "patterns": [
+        {
+          "begin1": "('.+')?\\s*(=>)?\\s*\\{",
+          "begin": "\\{",
+          "beginCaptures": {
+            "1": { "name": "variable.other.sapinst.log" },
+            "2": { "name": "keyword.operator.comparision" },
+            "3": { "name": "support.variable.value.sapinst.log" }
+          },
+          "end": "\\}(?!\\})",
+          "contentName": "variable.other.sapinst.log",
+          "patterns": [
+            {
+              "match": "('.+')\\s*(=>)\\s*('?.+`?),?",
+              "captures": {
+                "1": { "name": "variable.other.sapinst.log" },
+                "2": { "name": "keyword.operator.comparision" },
+                "3": {
+                  "name": "support.variable.value.sapinst.log",
+                  "patterns": [
+                    { "include": "source.sapinst.process#placeholder" }
+                  ]
+                }
+              }
+            },
+            { "include": "$self" }
+          ]
+        }
+      ]
+    }
+  },
+  "processDefinitions": {
+    "match": "(\\w+/)((?:BOBJ|COMMON)/ProcessDefinitions/)?([\\w\\-]+(?:\\.process))",
+    "captures": {
+      "1": { "name": "entity.other.attribute-name.sapinst.log" },
+      "2": { "name": "variable.sapinst.log" },
+      "3": { "name": "variable.alternate.sapinst.log" }
+    }
+  },
+  "transferParams": {
+    "match": "(Param:)(\\w+)(=)(.+)",
+    "captures": {
+      "1": { "name": "entity.other.attribute-name.sapinst.log" },
+      "2": { "name": "variable.sapinst.log" },
+      "3": { "name": "keyword.operator.comparision" },
+      "4": { "name": "variable.alternate.sapinst.log" }
+    }
+  }
+}

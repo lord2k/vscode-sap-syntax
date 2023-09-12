@@ -1,0 +1,19 @@
+{
+  "name": "SilentInstallerCommon",
+  "variables": {
+    "instType": ",?\\s*(?:(?:([\\w\\*]+[\\/])((?:BOBJ|COMMON)\\/ProcessDefinitions\\/)?|)|(\\w+__))?(\\S+)?\\s*",
+    "desc": "(?:,\\s*([\\w\\s()\\.\\-\\/\\+]*))?",
+    "params": "(?:,\\s*([\\w\\*\\^]*))?",
+    "comment": "(\\s*\\#.*)?",
+    "wordExt": "[\\w \\-();\\.:\\\\\\[*!\"{}]+",
+    "dateIso": "\\d{4}[-\\/.]?(?:\\d{2}[-\\/.]?){2}\\s*(?:\\d{2}:?){3}"
+  },
+  "scope": "source.sapinst",
+  "contexts": {
+    "main": [
+      {
+        "meta_scope": "main"
+      }
+    ]
+  }
+}

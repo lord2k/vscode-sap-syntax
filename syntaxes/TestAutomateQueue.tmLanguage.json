@@ -1,0 +1,60 @@
+{
+  "name": "InstallTestAutomat Queue",
+  "file_extensions": [
+    "menu"
+  ],
+  "scope": "source.queue",
+  "contexts": {
+    "main": [
+      {
+        "match": "\\s*###.*$",
+        "scope": "comment.strong.queue markup.bold"
+      },
+      {
+        "match": "#.*$",
+        "scope": "comment.queue markup.italic"
+      },
+      {
+        "match": "(?x)\n\\s*(\\w+[/])((?:\\w+/)+)*(\\w+)(\\.process)?(?:(\\s*[,\\w\\s]+))?\\s*(\\#.*)?",
+        "captures": {
+          "1": "entity.other.attribute-name.queue",
+          "2": "entity",
+          "3": "variable.queue",
+          "4": "string.queue",
+          "5": "variable.alternate.queue",
+          "6": "comment.queue"
+        }
+      },
+      {
+        "match": "\"(?=.+\")",
+        "push": "stringDouble"
+      },
+      {
+        "match": "\\'(?=.+\\')",
+        "push": "stringSingle"
+      }
+    ],
+    "stringDouble": [
+      {
+        "meta_scope": "string.quoted.double.queue"
+      },
+      {
+        "match": "\\\\.",
+        "scope": "constant.character.escape.queue"
+      },
+      {
+        "match": "\"",
+        "pop": true
+      }
+    ],
+    "stringSingle": [
+      {
+        "meta_scope": "string.quoted.single.queue"
+      },
+      {
+        "match": "\\'",
+        "pop": true
+      }
+    ]
+  }
+}

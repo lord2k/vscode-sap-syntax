@@ -1,0 +1,174 @@
+{
+  "file_extensions": [
+    "template",
+    "tempalte.ascs",
+    "template.d",
+    "template.db",
+    "template.dvebmgs"
+  ],
+  "scope": "source.cim.template",
+  "contexts": {
+    "main": [
+      {
+        "match": "(?!\\.)([\\w\\-]+:)(?:\\s*([\\w\\-]+))?\\s*\\{",
+        "push": "object",
+        "captures": {
+          "1": "keyword",
+          "2": "entity.name.function"
+        }
+      },
+      {
+        "match": "\\s*###.*$",
+        "scope": "comment.strong.cim.template markup.bold"
+      },
+      {
+        "match": "^\\s*#.*$",
+        "scope": "comment.cim.template markup.italic"
+      },
+      {
+        "match": "([\\w\\-]+:)",
+        "captures": {
+          "1": "keyword.cim.template"
+        }
+      },
+      {
+        "match": "\"(?=.+\")",
+        "push": "stringDouble"
+      },
+      {
+        "match": "\\'(?=.+\\')",
+        "push": "stringSingle"
+      }
+    ],
+    "object": [
+      {
+        "match": "((?:SAP_)?MetricValue)\\(",
+        "captures": {
+          "1": "variable.parameter.cim.template"
+        }
+      },
+      {
+        "match": "(?!\\.)([\\w\\-]+:)(?:\\s*([\\w\\-]+))?\\s*\\{",
+        "set": "object",
+        "captures": {
+          "1": "keyword.cim.template",
+          "2": "entity.name.function"
+        }
+      },
+      {
+        "match": "([$]\\[[\\w\\-\\.()#:=,\\*]+)",
+        "push": "variable",
+        "captures": {
+          "1": "variable.alternate.cim.template"
+        }
+      },
+      {
+        "match": "\\s(?!\\.)([\\w\\-]+:)",
+        "captures": {
+          "1": "keyword.cim.template"
+        }
+      },
+      {
+        "match": "([@]\\[)",
+        "scope": "variable.parameter",
+        "push": "array",
+        "captures": {
+          "1": "variable",
+          "2": "variable.parameter"
+        }
+      },
+      {
+        "match": "\\s*###.*$",
+        "scope": "comment.strong.cim.template markup.bold"
+      },
+      {
+        "match": "^\\s*#.*$",
+        "scope": "comment.cim.template markup.italic"
+      },
+      {
+        "match": "}",
+        "pop": true
+      }
+    ],
+    "array": [
+      {
+        "meta_scope": "variable"
+      },
+      {
+        "match": "(#?\\w+\\()",
+        "captures": {
+          "1": "entity.name.function"
+        }
+      },
+      {
+        "match": "\\)",
+        "scope": "entity.name.function"
+      },
+      {
+        "match": "([@]\\[)",
+        "scope": "variable.parameter",
+        "push": "array2",
+        "captures": {
+          "1": "markup.italic",
+          "2": "variable.parameter"
+        }
+      },
+      {
+        "match": "]",
+        "scope": "variable.parameter",
+        "pop": true
+      }
+    ],
+    "array2": [
+      {
+        "meta_scope": "markup.italic"
+      },
+      {
+        "match": "(#?\\w+\\()",
+        "captures": {
+          "1": "entity.name.function"
+        }
+      },
+      {
+        "match": "\\)",
+        "scope": "entity.name.function"
+      },
+      {
+        "match": "]",
+        "scope": "markup.italic",
+        "pop": true
+      }
+    ],
+    "variable": [
+      {
+        "meta_scope": "variable.alternate.cim.template"
+      },
+      {
+        "match": "]",
+        "pop": true
+      }
+    ],
+    "stringDouble": [
+      {
+        "meta_scope": "string.quoted.double.cim.template"
+      },
+      {
+        "match": "\\\\.",
+        "scope": "constant.character.escape.cim.template"
+      },
+      {
+        "match": "\"",
+        "pop": true
+      }
+    ],
+    "stringSingle": [
+      {
+        "meta_scope": "string.quoted.single.cim.template"
+      },
+      {
+        "match": "\\'",
+        "pop": true
+      }
+    ]
+  }
+}
