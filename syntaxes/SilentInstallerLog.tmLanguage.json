@@ -13,19 +13,18 @@
   ],
   "repository": {
     "logline": {
-      "match": "(\\d{4}-\\d{2}-\\d{2}\\s(?:\\d{2}\\:?){3})\\s*\\[(?:(error)|(\\w+))\\]\\s*\\[(\\d+)\\]\\[(\\d+)\\](?:[\\w\\|\\s]*)?(?:(\\[(?:DEBUG|ERROR|INFO|RESULT|WARNING)\\]:))?((\\[[\\w:\\\\./]+\\])+)?(.+)$",
+      "match": "(?x)\n(\\d{4}-\\d{2}-\\d{2}\\s(?:\\d{2}\\:?){3})\\s*\n\\[(?:(error)|(\\w+))\\]\\s*\\[(\\d+)\\]\\[(\\d+)\\]\n([\\w\\|\\s\\.\\-]+pm\\s*\\|\\s*)?\n|(\\[(?:DEBUG|ERROR|INFO|RESULT|WARNING)\\]:)\n|((\\[[\\w:\\\\.\\/]+\\])+)\n|(.+)$",
       "captures": {
         "1": { "name": "meta.date keyword.sapinst.log" },
         "2": { "name": "meta.severity invalid.keyword.sapinst.log" },
         "3": { "name": "meta.severity variable.sapinst.log" },
         "4": { "name": "meta.thread constant.character.escape.sapinst.log" },
         "5": { "name": "meta.pid constant.character.escape.sapinst.log" },
-        "6": {
-          "name": "meta.lvm string.unquoted.sapinst.log markup.bold markup.italic"
-        },
-        "7": { "name": "meta.perlmod support.function.builtin.sapinst.log" },
-        "8": { "name": "meta.perlmod entity.function.parameter.sapinst.log" },
-        "9": {
+        "6": { "name": "meta.perlmod support.function.builtin.sapinst.log" },
+        "7": { "name": "meta.lvm string.unquoted.sapinst.log markup.bold markup.italic" },
+        "8": { "name": "meta.perlmod support.function.builtin.sapinst.log" },
+        "9": { "name": "meta.perlmod entity.function.parameter.sapinst.log" },
+        "10": {
           "name": "content.sapinst.log",
           "patterns": [{ "include": "#value" }]
         }
@@ -218,7 +217,7 @@
       }
     },
     "transferParams": {
-      "match": "(Param:|LvmParamsFromFile:)\\s*(<?[\\w_\\-\\s\\.]+>?)\\s*(=)\\s*(.+)",
+      "match": "((?:Param|LvmParamsFromFile|Setting parameter):)\\s*(<?[\\w_\\-\\s\\.]+>?)\\s*(=)\\s*(.+)",
       "captures": {
         "1": { "name": "entity.other.attribute-name.sapinst.log" },
         "2": { "name": "variable.sapinst.log" },
