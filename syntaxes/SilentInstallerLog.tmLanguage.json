@@ -36,7 +36,7 @@
       "name": "date keyword.sapinst.log"
     },
     "array": {
-      "begin": "\\[",
+      "begin": "(?<!Condition |\\\\)\\[",
       "beginCaptures": {
         "0": {
           "name": "punctuation.definition.array.begin.json"
@@ -218,7 +218,7 @@
       }
     },
     "transferParams": {
-      "match": "(Param:)([\\w_\\-]+)(=)(.+)",
+      "match": "(Param:|LvmParamsFromFile:)\\s*(<?[\\w_\\-\\s\\.]+>?)\\s*(=)\\s*(.+)",
       "captures": {
         "1": { "name": "entity.other.attribute-name.sapinst.log" },
         "2": { "name": "variable.sapinst.log" },
@@ -228,14 +228,15 @@
     },
     "value": {
       "patterns": [
-        { "include": "source.sapinst.process#placeholder" },
         { "include": "#transferParams" },
+        { "include": "source.sapinst.process#placeholder" },
         { "include": "#constant" },
         { "include": "#number" },
         { "include": "#string" },
         { "include": "#array" },
+        { "include": "source.sapinst.process#condition" },
         { "include": "#object" },
-        { "include": "#comments" }
+        { "include": "#commentsX" }
       ]
     }
   }
