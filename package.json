@@ -11,6 +11,7 @@
   "categories": [
     "Programming Languages"
   ],
+  "repository": "https://github.com/lord2k/vscode-sap-syntax.git",
   "contributes": {
     "languages": [
       {
