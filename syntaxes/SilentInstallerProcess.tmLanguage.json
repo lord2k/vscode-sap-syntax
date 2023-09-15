@@ -164,7 +164,6 @@
           "name": "string.quoted.single",
           "patterns": [
             { "include": "#placeholder" },
-            { "include": "#params3" },
             { "include": "#stringDouble" },
             { "include": "$self" }
           ]
@@ -190,7 +189,6 @@
           "name": "string.quoted.double",
           "patterns": [
             { "include": "#placeholder" },
-            { "include": "#params3" },
             { "include": "#stringSingle" },
             { "include": "$self" }
           ]
@@ -227,7 +225,7 @@
     "condition": {
       "patterns": [
         {
-          "begin": "\\[",
+          "begin": "(?<!\\\\)\\[",
           "beginCaptures": {
             "0": { "name": "constant.character.escape markup.bold" }
           },
