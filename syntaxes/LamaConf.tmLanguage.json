@@ -2,6 +2,7 @@
   "name": "LamaConf",
   "scopeName": "source.lama.conf",
   "patterns": [
+    { "match": "#.*", "name": "comment.line.number-sign" },
     {
       "explanation": "Name",
       "match": "\\s*(Name\\s*:)\\s*(\\w+)",
@@ -20,7 +21,6 @@
     },
     { "begin": "=?'", "end": "'", "name": "string.quoted.single" },
     { "begin": "=?\"", "end": "\"", "name": "string.quoted.double" },
-    { "match": "/?(\\S+/)+\\S*", "name": "string.path" },
     {
       "explanation": "Keyword",
       "match": "^\\s*(\\w+:)",
@@ -53,7 +53,7 @@
       "match": "-[^\\s=]+",
       "name": "entity.other.attribute-name"
     },
-    { "match": "#.*", "name": "comment.line.number-sign" }
+    { "match": "/?(\\S+/)+\\S*", "name": "string.path" }
   ],
   "repository": {
     "Params": {
