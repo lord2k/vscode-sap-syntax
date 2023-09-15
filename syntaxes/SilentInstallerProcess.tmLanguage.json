@@ -13,8 +13,7 @@
     { "include": "#stringDouble" },
     { "include": "#lastBefore=" },
     { "include": "#keys" },
-    { "include": "#vars" },
-    { "include": "#stringSingle3" }
+    { "include": "#vars" }
   ],
 
   "repository": {
