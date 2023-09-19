@@ -22,10 +22,6 @@ SilentInstaller .menu
 
 ![img-sapinst.menu]
 
-SilentInstaller .param
-
-![img-sapinst.param]
-
 SilentInstaller .process
 
 ![img-sapinst.process]
@@ -39,5 +35,4 @@ source.sapinst
 [img-lama.conf]:./img/lama.conf.png
 [img-sapinst.config]:./img/sapinst.config.png
 [img-sapinst.menu]:./img/sapinst.menu.png
-[img-sapinst.param]:./img/sapinst.param.png
 [img-sapinst.process]:./img/sapinst.process.png
