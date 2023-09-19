@@ -5,10 +5,10 @@ Installation
 ------------
 
 1. Copy extension to .vscode/extension
-2. Restart VS COde
+2. Restart VS Code
 3. Enjoy
 
-Examples with adjusted [Gruvbox-N](https://colorsublime.github.io/themes/Gruvbox-N/) theme
+Examples with [Gruvbox](https://marketplace.visualstudio.com/items?itemName=jdinhlife.gruvbox) theme
 ------------------------------------
 Lama .conf
 
@@ -36,9 +36,8 @@ Scopes added
 source.lama.conf
 source.sapinst
 
-[img-lama.conf]:./media/lama.conf.png
-[img-sapinst.config]:./media/sapinst.config.png
-[img-sapinst.menu]:./media/sapinst.menu.png
-[img-sapinst.param]:./media/sapinst.param.png
-[img-sapinst.process]:./media/sapinst.process.png
-[img-TAP]:./media/TAP.png
+[img-lama.conf]:./img/lama.conf.png
+[img-sapinst.config]:./img/sapinst.config.png
+[img-sapinst.menu]:./img/sapinst.menu.png
+[img-sapinst.param]:./img/sapinst.param.png
+[img-sapinst.process]:./img/sapinst.process.png

@@ -6,7 +6,11 @@
   "engines": {
     "vscode": ">=0.9.0-pre.1"
   },
+  "galleryBanner": {
+    "color": "#fefefe"
+  },
   "author": "Lars Kalms",
+  "publisher": "larskalms",
   "icon": "img/sap.png",
   "categories": [
     "Programming Languages"
@@ -53,7 +57,9 @@
         ],
         "extensions": [
           ".config",
-          ".process"
+          ".process",
+          ".properties",
+          ".params"
         ]
       },
       {
