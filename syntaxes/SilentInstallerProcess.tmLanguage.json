@@ -24,77 +24,59 @@
         "2": { "name": "keyword.operator.comparison markup.bold" }
       }
     },
-    "keysOld": {
+    "builtin": {
       "patterns": [
         {
-          "contentName": "meta.embedded.block.bash",
-          "begin": "(COMMANDS_\\w+)\\.(\\w+[\\.])*(\\w+)([+]?=)(\")",
-          "beginCaptures": {
-            "1": { "name": "keyword" },
-            "2": { "name": "variable" },
-            "3": { "name": "variable" },
-            "4": { "name": "keyword.operator.comparison markup.bold" },
-            "5": { "name": "punctuation.definition.bash.begin.sapinst.process string.quoted.double" }
-          },
-          "end": "(\")",
-          "endCaptures": {
-            "0": { "name": "punctuation.definition.bash.end.sapinst.process" },
-            "1": { "name": "source.sapinst.process" }
-          },
-          "patterns": [
-            { "include": "#placeholder" },
-            { "include": "#source.shell" }
-          ]
-        },
-        {
-          "match": "(Commands?|Severity|Substitutions|Files|Control|Transfer)",
+          "match": "(\\.)(Commands?|Severity|Substitutions|Files|Control|Transfer)",
           "captures": {
-            "1": { "name": "keyword support.function.builtin" }
+            "1": { "name": "punctuation.dot" },
+            "2": { "name": "keyword support.function.builtin" }
           }
-        },
-        {
-          "match": "\\.(Execute|IfNot|If|Not|FileExists)",
-          "captures": {
-            "1": {
-              "name": "keyword.control support.function.builtin markup.italic"
-            }
-          }
-        },
-        {
-          "match": "((?:phase|process)\\.\\d{1,3})",
-          "captures": {
-            "1": { "name": "entity.name.selector" }
-          }
-        },
-        {
-          "match": "^\\s*(?:([\\w\\-]+)[\\.(\\[)])",
-          "captures": {
-            "1": { "name": "keyword" },
-            "2": { "name": "constant.character.escape" }
-          }
-        },
-        { "include": "#condition" }
+        }
       ]
     },
     "keys": {
       "patterns": [
+        { "include": "#builtin" },
         {
-          "contentName": "meta.embedded.block.bas meta.statement.command.shell",
-          "begin": "(COMMANDS_\\w+)\\.(\\w+[\\.])*(\\w+)([+]?=)(\")",
+          "begin1": "(COMMANDS_\\w+)(\\.)(\\w+)(?:(\\.)(\\w+))*([+]?=)(\")",
+          "begin": "(COMMANDS_\\w+)",
           "beginCaptures": {
             "1": { "name": "keyword" },
-            "2": { "name": "variable" },
-            "3": { "name": "variable" },
-            "4": { "name": "keyword.operator.comparison markup.bold" },
-            "5": { "name": "punctuation.definition.bash.begin.sapinst.process string.quoted.double" }
+            "2": { "name": "punctuation.dot" },
+            "3": { "name": "meta.1 variable" },
+            "4": { "name": "punctuation.dot" },
+            "5": { "name": "meta.2 variable" },
+            "6": { "name": "keyword.operator.comparison markup.bold" },
+            "7": { "name": "punctuation.definition.bash.begin.sapinst.process string.quoted.double" }
           },
-          "end": "(\")",
+          "end": "\"?\n",
           "endCaptures": {
             "0": { "name": "punctuation.definition.bash.end.sapinst.process punctuation.terminator.statement.semicolon.shell" },
             "1": { "name": "source.sapinst.process" }
           },
           "patterns": [
+            {
+              "contentName": "meta.embedded.block.bash meta.statement.command.shell",
+              "begin": "(=)(\")?",
+              "beginCaptures": {
+                "0": { "name": "meta.embedded.block.bash meta.statement.command.shell"},
+                "1": { "name": "keyword.operator.comparison markup.bold" },
+                "2": { "name": "punctuation.definition.bash.begin.sapinst.process string.quoted.double" }
+              },
+              "end": "(\")?\n",
+              "endCaptures": {
+                "0": { "name": "punctuation.definition.bash.end.sapinst.process punctuation.terminator.statement.semicolon.shell" },
+                "1": { "name": "string.quoted.double" }
+              },
+              "patterns": [
+                { "include": "#source.shell" }
+              ]  
+            },
+            { "include": "#comment" },
             { "include": "#placeholder" },
+            { "include": "#builtin" },
+            { "include": "#vars" },
             { "include": "#source.shell" }
           ]
         },
@@ -118,13 +100,6 @@
           }
         },
         {
-          "match": "(\\.)(Commands?|Severity|Substitutions|Files|Control|Transfer)",
-          "captures": {
-            "1": { "name": "punctuation.dot" },
-            "2": { "name": "keyword support.function.builtin" }
-          }
-        },
-        {
           "match": "(\\.)(Execute|IfNot|If|Not|FileExists)",
           "captures": {
             "1": { "name": "punctuation.dot" },
@@ -137,10 +112,11 @@
     },
     "vars": {
       "contentName": "variable",
-      "match": "\\.([\\w_\\-]+)",
+      "match": "(\\.)([\\w_\\-]+)",
       "captures": {
-        "1": { "name": "variable vars" },
-        "2": { "name": "keyword.operator.comparison markup.bold" }
+        "1": { "name": "punctuation.dot" },
+        "2": { "name": "variable vars" },
+        "3": { "name": "keyword.operator.comparison markup.bold" }
       }
     },
     "stringSingle": {
@@ -235,23 +211,6 @@
           "contentName": "string.unquoted markup.italic meta.condition",
           "patterns": [{ "include": "#params" }]
         }
-      ]
-    },
-    "condition2": {
-      "patterns": [
-        {
-          "match": "(?:(\\[)?\\s*(\\w+)\\s*([=~<>!]+)\\s*([\\w\\d\"'.]+)\\s*(\\])?(\\s*\\w+)?)+",
-          "contentName": "meta.condition",
-          "captures": {
-            "1": { "name": "constant.character.escape markup.bold" },
-            "2": { "name": "entity.other.attribute-name  markup.italic" },
-            "3": { "name": "keyword.operator.comparison markup.italic" },
-            "4": { "name": "variable  markup.italic" },
-            "5": { "name": "constant.character.escape markup.bold" },
-            "6": { "name": "string.unquoted" }
-          }
-        },
-        { "include": "#params" }
       ]
     },
     "params": {

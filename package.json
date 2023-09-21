@@ -6,6 +6,7 @@
   "engines": {
     "vscode": ">=0.9.0-pre.1"
   },
+  "license": "MIT",
   "galleryBanner": {
     "color": "#fefefe"
   },
@@ -15,10 +16,10 @@
   "categories": [
     "Programming Languages"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/lord2k/vscode-sap-syntax.git"
-  },
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/lord2k/vscode-sap-syntax.git"
+	},
   "contributes": {
     "languages": [
       {

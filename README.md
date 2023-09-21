@@ -12,27 +12,22 @@ Examples with [Gruvbox](https://marketplace.visualstudio.com/items?itemName=jdin
 ------------------------------------
 Lama .conf
 
-![img-lama.conf]
+![img-lama.conf](img/lama.conf.png)
 
 SilentInstaller .config
 
-![img-sapinst.config]
+![img-sapinst.config](img/sapinst.config.png)
 
 SilentInstaller .menu
 
-![img-sapinst.menu]
+![img-sapinst.menu](img/sapinst.menu.png)
 
 SilentInstaller .process
 
-![img-sapinst.process]
+![img-sapinst.process](img/sapinst.process.png)
 
 
 Scopes added
 ------------
 source.lama.conf
 source.sapinst
-
-[img-lama.conf]:./img/lama.conf.png
-[img-sapinst.config]:./img/sapinst.config.png
-[img-sapinst.menu]:./img/sapinst.menu.png
-[img-sapinst.process]:./img/sapinst.process.png
