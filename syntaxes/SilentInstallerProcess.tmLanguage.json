@@ -48,11 +48,15 @@
             "4": { "name": "punctuation.dot" },
             "5": { "name": "meta.2 variable" },
             "6": { "name": "keyword.operator.comparison markup.bold" },
-            "7": { "name": "punctuation.definition.bash.begin.sapinst.process string.quoted.double" }
+            "7": {
+              "name": "punctuation.definition.bash.begin.sapinst.process string.quoted.double"
+            }
           },
           "end": "\"?\n",
           "endCaptures": {
-            "0": { "name": "punctuation.definition.bash.end.sapinst.process punctuation.terminator.statement.semicolon.shell" },
+            "0": {
+              "name": "punctuation.definition.bash.end.sapinst.process punctuation.terminator.statement.semicolon.shell"
+            },
             "1": { "name": "source.sapinst.process" }
           },
           "patterns": [
@@ -60,18 +64,22 @@
               "contentName": "meta.embedded.block.bash meta.statement.command.shell",
               "begin": "(=)(\")?",
               "beginCaptures": {
-                "0": { "name": "meta.embedded.block.bash meta.statement.command.shell"},
+                "0": {
+                  "name": "meta.embedded.block.bash meta.statement.command.shell"
+                },
                 "1": { "name": "keyword.operator.comparison markup.bold" },
-                "2": { "name": "punctuation.definition.bash.begin.sapinst.process string.quoted.double" }
+                "2": {
+                  "name": "punctuation.definition.bash.begin.sapinst.process string.quoted.double"
+                }
               },
               "end": "(\")?\n",
               "endCaptures": {
-                "0": { "name": "punctuation.definition.bash.end.sapinst.process punctuation.terminator.statement.semicolon.shell" },
+                "0": {
+                  "name": "punctuation.definition.bash.end.sapinst.process punctuation.terminator.statement.semicolon.shell"
+                },
                 "1": { "name": "string.quoted.double" }
               },
-              "patterns": [
-                { "include": "#source.shell" }
-              ]  
+              "patterns": [{ "include": "#source.shell" }]
             },
             { "include": "#comment" },
             { "include": "#placeholder" },
@@ -209,7 +217,10 @@
           },
           "name": "entity.other.attribute-name markup.italic meta.condition",
           "contentName": "string.unquoted markup.italic meta.condition",
-          "patterns": [{ "include": "#params" }]
+          "patterns": [
+            { "include": "#params" },
+            { "include": "#condition" }
+          ]
         }
       ]
     },
