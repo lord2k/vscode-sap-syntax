@@ -13,7 +13,7 @@
     { "include": "#stringDouble" },
     { "include": "#lastBefore=" },
     { "include": "#keys" },
-    { "include": "#vars" }
+    { "include": "#condition" }
   ],
 
   "repository": {
@@ -89,17 +89,19 @@
           ]
         },
         {
-          "begin": "^\\w+",
+          "begin": "^([\\w-]+)",
           "beginCaptures": {
-            "0": {
-              "name": "punctuation.definition.keyword.begin keyword.control"
-            }
+            "1": { "name": "meta.definition.keyword.begin keyword.control" },
+            "2": { "name": "punctuation.dot" }
           },
-          "end": "\\.",
+          "end": "(\\.)",
           "endCaptures": {
-            "0": { "name": "punctuation.definition.keyword.end" }
+            "0": { "name": "meta.definition.keyword.end" },
+            "1": { "name": "punctuation.dot" }
           },
-          "patterns": [{ "include": "#condition" }]
+          "patterns": [
+            { "include": "#condition" }
+          ]
         },
         {
           "match": "((?:phase|process)\\.\\d{1,3})",
