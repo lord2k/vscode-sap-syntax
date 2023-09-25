@@ -40,7 +40,8 @@
         ],
         "extensions": [
           ".template"
-        ]
+        ],
+        "configuration": "./language-configuration.json"
       },
       {
         "id": "HTTPRecording",
@@ -48,7 +49,8 @@
           "HTTP Response",
           ".<md5>"
         ],
-        "firstLine": "HTTP/*"
+        "firstLine": "HTTP/*",
+        "configuration": "./language-configuration.json"
       },
       {
         "id": "SilentInstallerMenu",
@@ -68,7 +70,8 @@
         ],
         "extensions": [
           ".log"
-        ]
+        ],
+        "configuration": "./language-configuration.json"
       },
       {
         "id": "SilentInstallerProcess",
