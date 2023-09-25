@@ -1,0 +1,29 @@
+{
+  "name": "HTTPRecording",
+  "scopeName": "source.http",
+  "patterns": [
+    { "include": "source.json" },
+    { "include": "text.xml" },
+    { "include": "text.html.basic" },
+    { "include": "#http" }
+  ],
+  "repository": {
+    "http": {
+      "patterns": [
+        {
+          "match": "^HTTP\\/.+",
+          "name": "support.function.builtin"
+        },
+        {
+          "match": "([\\w\\-]+)\\s*(:)\\s*(.+)",
+          "name": "meta.http.header",
+          "captures": {
+            "1": { "name": "keyword" },
+            "2": { "name": "punctuation.colon" },
+            "3": { "name": "string.unquoted" }
+          }
+        }
+      ]
+    }
+  }
+}
