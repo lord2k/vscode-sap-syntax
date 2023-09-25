@@ -33,6 +33,16 @@
         ]
       },
       {
+        "id": "CimTemplate",
+        "aliases": [
+          "CIM Template",
+          ".template"
+        ],
+        "extensions": [
+          ".template"
+        ]
+      },
+      {
         "id": "HTTPRecording",
         "aliases": [
           "HTTP Response",
@@ -91,6 +101,11 @@
         "language": "LamaConf",
         "scopeName": "source.lama.conf",
         "path": "./syntaxes/LamaConf.tmLanguage.json"
+      },
+      {
+        "language": "CimTemplate",
+        "scopeName": "source.cim.template",
+        "path": "./syntaxes/CimTemplate.tmLanguage.json"
       },
       {
         "language": "HTTPRecording",

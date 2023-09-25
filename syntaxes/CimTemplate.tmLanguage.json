@@ -1,174 +1,124 @@
 {
-  "file_extensions": [
-    "template",
-    "tempalte.ascs",
-    "template.d",
-    "template.db",
-    "template.dvebmgs"
+  "name": "CimTemplate",
+  "scopeName": "source.cim.template",
+
+  "patterns": [
+    { "include": "source.sapinst.process#params" },
+    { "include": "#object" },
+    { "include": "#array" },
+    { "include": "#array2" },
+    { "include": "#variable" },
+    {
+      "match": "(?!\\.)([\\w\\-]+:)(?:\\s*([\\w\\-]+))?\\s*\\{",
+      "captures": {
+        "1": { "name": "keyword" },
+        "2": { "name": "support.function.builtin" }
+      }
+    },
+    {
+      "match": "\\s*###.*$",
+      "name": "comment.strong.cim.template markup.bold"
+    },
+    {
+      "match": "^\\s*#.*$",
+      "name": "comment.cim.template markup.italic"
+    },
+    {
+      "match": "([\\w\\-]+:)",
+      "captures": {
+        "1": { "name": "keyword.cim.template" }
+      }
+    }
   ],
-  "scope": "source.cim.template",
-  "contexts": {
-    "main": [
-      {
-        "match": "(?!\\.)([\\w\\-]+:)(?:\\s*([\\w\\-]+))?\\s*\\{",
-        "push": "object",
-        "captures": {
-          "1": "keyword",
-          "2": "entity.name.function"
+  "repository": {
+    "object": {
+      "patterns": [
+        {
+          "match": "((?:SAP_)?MetricValue)\\(?",
+          "captures": {
+            "1": { "name": "support.function.builtin.cim.template" }
+          }
+        },
+        {
+          "match": "(?!\\.)([\\w\\-]+:)(?:\\s*([\\w\\-]+))?\\s*\\{",
+          "captures": {
+            "1": { "name": "keyword.cim.template" },
+            "2": { "name": "entity.name.function" }
+          }
+        },
+        {
+          "match": "([$]\\[[\\w\\-\\.()#:=,\\*]+)",
+          "captures": {
+            "1": { "name": "variable.cim.template" }
+          }
+        },
+        {
+          "match": "\\s(?!\\.)([\\w\\-]+:)",
+          "captures": {
+            "1": { "name": "keyword.cim.template" }
+          }
+        },
+        {
+          "match": "([@]\\[|\\])",
+          "name": "variable.parameter",
+          "captures": {
+            "1": { "name": "variable" },
+            "2": { "name": "variable.parameter" }
+          }
+        },
+        {
+          "match": "\\s*###.*$",
+          "name": "comment.strong.cim.template markup.bold"
+        },
+        {
+          "match": "^\\s*#.*$",
+          "name": "comment.cim.template markup.italic"
         }
-      },
-      {
-        "match": "\\s*###.*$",
-        "scope": "comment.strong.cim.template markup.bold"
-      },
-      {
-        "match": "^\\s*#.*$",
-        "scope": "comment.cim.template markup.italic"
-      },
-      {
-        "match": "([\\w\\-]+:)",
-        "captures": {
-          "1": "keyword.cim.template"
+      ]
+    },
+    "array": {
+      "patterns": [
+        {
+          "match": "(#?\\w+\\()",
+          "captures": {
+            "1": { "name": "entity.name.function" }
+          }
+        },
+        {
+          "match": "\\)",
+          "name": "entity.name.function"
+        },
+        {
+          "match": "([@]\\[)",
+          "name": "variable.parameter",
+          "captures": {
+            "1": { "name": "markup.italic" },
+            "2": { "name": "variable.parameter" }
+          }
         }
-      },
-      {
-        "match": "\"(?=.+\")",
-        "push": "stringDouble"
-      },
-      {
-        "match": "\\'(?=.+\\')",
-        "push": "stringSingle"
-      }
-    ],
-    "object": [
-      {
-        "match": "((?:SAP_)?MetricValue)\\(",
-        "captures": {
-          "1": "variable.parameter.cim.template"
+      ]
+    },
+    "array2": {
+      "patterns": [
+        {
+          "match": "(#?\\w+\\()",
+          "captures": {
+            "1": { "name": "support.function.builtin" }
+          }
+        },
+        {
+          "match": "\\)",
+          "name": "entity.name.function"
         }
-      },
-      {
-        "match": "(?!\\.)([\\w\\-]+:)(?:\\s*([\\w\\-]+))?\\s*\\{",
-        "set": "object",
-        "captures": {
-          "1": "keyword.cim.template",
-          "2": "entity.name.function"
+      ]
+    },
+    "variable": {
+      "patterns": [
+        {
+          "match": "\\$\\[\\w+\\]",
+          "name": "variable"
         }
-      },
-      {
-        "match": "([$]\\[[\\w\\-\\.()#:=,\\*]+)",
-        "push": "variable",
-        "captures": {
-          "1": "variable.alternate.cim.template"
-        }
-      },
-      {
-        "match": "\\s(?!\\.)([\\w\\-]+:)",
-        "captures": {
-          "1": "keyword.cim.template"
-        }
-      },
-      {
-        "match": "([@]\\[)",
-        "scope": "variable.parameter",
-        "push": "array",
-        "captures": {
-          "1": "variable",
-          "2": "variable.parameter"
-        }
-      },
-      {
-        "match": "\\s*###.*$",
-        "scope": "comment.strong.cim.template markup.bold"
-      },
-      {
-        "match": "^\\s*#.*$",
-        "scope": "comment.cim.template markup.italic"
-      },
-      {
-        "match": "}",
-        "pop": true
-      }
-    ],
-    "array": [
-      {
-        "meta_scope": "variable"
-      },
-      {
-        "match": "(#?\\w+\\()",
-        "captures": {
-          "1": "entity.name.function"
-        }
-      },
-      {
-        "match": "\\)",
-        "scope": "entity.name.function"
-      },
-      {
-        "match": "([@]\\[)",
-        "scope": "variable.parameter",
-        "push": "array2",
-        "captures": {
-          "1": "markup.italic",
-          "2": "variable.parameter"
-        }
-      },
-      {
-        "match": "]",
-        "scope": "variable.parameter",
-        "pop": true
-      }
-    ],
-    "array2": [
-      {
-        "meta_scope": "markup.italic"
-      },
-      {
-        "match": "(#?\\w+\\()",
-        "captures": {
-          "1": "entity.name.function"
-        }
-      },
-      {
-        "match": "\\)",
-        "scope": "entity.name.function"
-      },
-      {
-        "match": "]",
-        "scope": "markup.italic",
-        "pop": true
-      }
-    ],
-    "variable": [
-      {
-        "meta_scope": "variable.alternate.cim.template"
-      },
-      {
-        "match": "]",
-        "pop": true
-      }
-    ],
-    "stringDouble": [
-      {
-        "meta_scope": "string.quoted.double.cim.template"
-      },
-      {
-        "match": "\\\\.",
-        "scope": "constant.character.escape.cim.template"
-      },
-      {
-        "match": "\"",
-        "pop": true
-      }
-    ],
-    "stringSingle": [
-      {
-        "meta_scope": "string.quoted.single.cim.template"
-      },
-      {
-        "match": "\\'",
-        "pop": true
-      }
-    ]
+      ]
+    }
   }
 }
