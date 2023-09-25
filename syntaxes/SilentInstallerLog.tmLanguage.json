@@ -4,7 +4,6 @@
   "patterns": [
     { "include": "#processDefinitions" },
     { "include": "#logline" },
-    { "include": "source.sapinst.process#conditionX" },
     { "include": "#value" }
   ],
   "repository": {
@@ -268,8 +267,7 @@
         { "include": "source.sapinst.process#placeholder" },
         { "include": "#array" },
         { "include": "source.sapinst.process#condition" },
-        { "include": "#object" },
-        { "include": "#commentsX" }
+        { "include": "#object" }
       ]
     }
   }

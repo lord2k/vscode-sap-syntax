@@ -39,7 +39,6 @@
       "patterns": [
         { "include": "#builtin" },
         {
-          "begin1": "(COMMANDS_\\w+)(\\.)(\\w+)(?:(\\.)(\\w+))*([+]?=)(\")",
           "begin": "(COMMANDS_\\w+)",
           "beginCaptures": {
             "1": { "name": "keyword" },
