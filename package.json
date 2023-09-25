@@ -2,7 +2,7 @@
   "name": "vscode-sap-syntax",
   "displayName": "SAP Syntax",
   "description": "SAP Files Syntax Highlighting",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "engines": {
     "vscode": ">=0.9.0-pre.1"
   },
