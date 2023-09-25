@@ -34,9 +34,10 @@
     "object": {
       "patterns": [
         {
-          "match": "((?:SAP_)?MetricValue)\\(?",
+          "match": "((?:SAP_(?:DB_)?)?MetricValue|SAPInstance(?:Alert|Process)|(?:SAP_)?ITSAMDatabase(?:Component)?)(\\(?)",
           "captures": {
-            "1": { "name": "support.function.builtin.cim.template" }
+            "1": { "name": "support.function.builtin.cim.template" },
+            "2": { "name": "entity.name.function" }
           }
         },
         {
