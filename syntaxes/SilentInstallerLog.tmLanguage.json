@@ -161,7 +161,7 @@
       ]
     },
     "stringPath": {
-      "match": "(/?(?:\\S+/)+\\S*),?",
+      "match": "(/?(?:\\S+/)+\\S*)[,\\s]?",
       "captures": {
         "1": {
           "name": "string.path",
