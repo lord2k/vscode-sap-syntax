@@ -271,6 +271,7 @@
           "name": "support.type.property-name.sapinst.log markup.italic meta.placeholder",
           "contentName": "support.type.property-name.sapinst.log markup.italic meta.placeholder",
           "patterns": [
+            { "match": ",\\s*", "name": "punctuation.separator.comma" },
             { "include": "#value" },
             { "include": "#placeholder" }
           ]

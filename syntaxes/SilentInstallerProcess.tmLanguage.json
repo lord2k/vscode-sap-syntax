@@ -191,6 +191,7 @@
           "name": "entity.other.attribute-name markup.italic meta.placeholder",
           "contentName": "entity.other.attribute-name markup.italic meta.placeholder",
           "patterns": [
+            { "match": ",\\s*", "name": "punctuation.separator.comma" },
             { "include": "#placeholder" }
           ]
         }
