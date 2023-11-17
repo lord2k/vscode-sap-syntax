@@ -2,7 +2,7 @@
   "name": "vscode-sap-syntax",
   "displayName": "SAP Syntax",
   "description": "SAP Files Syntax Highlighting",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "engines": {
     "vscode": ">=0.9.0-pre.1"
   },
@@ -16,10 +16,10 @@
   "categories": [
     "Programming Languages"
   ],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/lord2k/vscode-sap-syntax.git"
-	},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lord2k/vscode-sap-syntax.git"
+  },
   "contributes": {
     "languages": [
       {
@@ -146,5 +146,9 @@
   },
   "__metadata": {
     "publisherDisplayName": "Lars Kalms"
+  },
+  "dependencies": {
+    "code": "^5.2.4",
+    "yo": "^5.0.0"
   }
 }
