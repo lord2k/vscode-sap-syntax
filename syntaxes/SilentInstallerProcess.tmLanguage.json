@@ -103,12 +103,12 @@
                 {
                   "contentName": "meta.embedded.block.bash meta.statement.command.shell",
                   "begin": "(\")",
-                  "end": "(\")",
+                  "end": "(\")(?=[^\"]*$)",
                   "beginCaptures": {
                     "0":{ "name": "meta.embedded.block.bash" },
                     "1":{ "name": "punctuation.definition.bash.begin",
                           "patterns":[
-                            {"include": "source.shell"}
+                            { "include": "source.shell" }
                           ]
                         }
                   },
@@ -116,6 +116,7 @@
                     "1":{"name": "punctuation.definition.bash.end" }
                   },
                   "patterns":[
+                    { "include": "#stringDouble" },
                     { "include": "source.lama.conf#Params" },
                     { "include": "#placeholder" },
                     { "include": "#source.shell" }
