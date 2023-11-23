@@ -11,6 +11,7 @@
     },
     { "include": "source.sap.common#comment" },
     { "include": "#files" },
+    { "include": "#substitutions" },
     { "include": "#stringDouble" },
     { "include": "#lastBefore=" },
     { "include": "#keys" },
@@ -155,6 +156,28 @@
             "2": {
               "name": "keyword.control support.function.builtin markup.italic"
             }
+          }
+        }
+      ]
+    },
+    "substitutions": {
+      "patterns": [
+        {
+          "match": "(SUBSTITUTION_\\w+)(\\.)(.+?)(?:(\\.)(.+?))*(=)(\")(.*?),(.*?),(.*?)(?:,(.*?))?(\")",
+          "captures": {
+            "0": { "name": "punctuation.comma" },
+            "1": { "name": "keyword" },
+            "2": { "name": "punctuation.dot" },
+            "3": { "name": "meta.1 variable", "patterns":[{"include":"#placeholder"}] },
+            "4": { "name": "punctuation.dot" },
+            "5": { "name": "meta.2 variable", "patterns":[{"include":"#placeholder"}] },
+            "6": { "name": "keyword.operator.comparison markup.bold" },
+            "7": { "name": "punctuation.definition.string.quoted.double.begin" },
+            "8": { "name": "meta.filename constant.other.type", "patterns":[{"include":"#placeholder"}] },
+            "9": { "name": "meta.placeholderNamer string.quoted.double", "patterns":[{"include":"#placeholder"}] },
+            "10": { "name": "meta.placeholderValue string.quoted.double", "patterns":[{"include":"#placeholder"}] },
+            "11": { "name": "support.function.builtin" },
+            "12": { "name": "punctuation.definition.string.quoted.double.begin" }
           }
         }
       ]
