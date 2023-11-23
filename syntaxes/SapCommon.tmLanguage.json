@@ -1,0 +1,95 @@
+{
+  "name": "SapCommon",
+  "scopeName": "source.sap.common",
+  "patterns": [{"include":"source.sap.common#all"}],
+  "repository": {
+    "all": {
+      "patterns": [
+        {"include":"#comment"},
+        {"include":"#stringDouble"},
+        {"include":"#stringSingle"},
+        {"include":"#placeholder"}
+    ]
+    },
+    "comment": {
+      "patterns": [
+        {
+          "match": "\"?\\s*(###.*)$",
+          "name": "comment markup.italic markup.bold"
+        },
+        { "match": "\"?\\s*(#.*)$", "name": "comment markup.italic" }
+      ]
+    }
+  },
+  "placeholder": {
+    "patterns": [
+      {
+        "begin": "<(placeholder_)?",
+        "beginCaptures": {
+          "0": { "name": "entity.name.selector markup.bold" },
+          "1": { "name": "variable markup.italic" }
+        },
+        "end": ">(?<=>)",
+        "endCaptures": {
+          "0": { "name": "entity.name.selector markup.bold" }
+        },
+        "name": "entity.other.attribute-name markup.italic meta.placeholder",
+        "contentName": "entity.other.attribute-name markup.italic meta.placeholder",
+        "patterns": [
+          { "match": ",\\s*", "name": "punctuation.separator.comma" },
+          { "include": "#placeholder" }
+        ]
+      }
+    ]
+  },
+  "stringSingle": {
+    "patterns": [
+      { "match": "\\\\.", "name": "constant.character.escape" },
+      {
+        "begin": "(?<!n)'",
+        "beginCaptures": {
+          "0": {
+            "name": "punctuation.definition.string.quoted.single.begin"
+          }
+        },
+        "end": "'(?<=')",
+        "endCaptures": {
+          "0": {
+            "name": "punctuation.definition.string.quoted.single.end"
+          }
+        },
+        "name": "string.quoted.single",
+        "patterns": [
+          { "include": "#placeholder" },
+          { "include": "#stringDouble" },
+          { "include": "$self" }
+        ]
+      }
+    ]
+  },
+  "stringDouble": {
+    "patterns": [
+      { "match": "\\\\.", "name": "constant.character.escape" },
+      {
+        "begin": "\"",
+        "beginCaptures": {
+          "0": {
+            "name": "punctuation.definition.string.quoted.double.begin"
+          }
+        },
+        "end": "\"(?<=\")",
+        "endCaptures": {
+          "0": {
+            "name": "punctuation.definition.string.quoted.double.end"
+          }
+        },
+        "name": "string.quoted.double",
+        "patterns": [
+          { "include": "#placeholder" },
+          { "include": "#stringSingle" },
+          { "include": "$self" }
+        ]
+      }
+    ]
+  }
+}

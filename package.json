@@ -23,6 +23,12 @@
   "contributes": {
     "languages": [
       {
+        "id": "SapCommon",
+        "aliases": [
+          "SAP Common"
+        ]
+      },
+      {
         "id": "LamaConf",
         "aliases": [
           "SAP Lama Conf",
@@ -100,6 +106,11 @@
       }
     ],
     "grammars": [
+      {
+        "language": "SapCommon",
+        "scopeName": "source.sap.common",
+        "path": "./syntaxes/SapCommon.tmLanguage.json"
+      },
       {
         "language": "LamaConf",
         "scopeName": "source.lama.conf",
