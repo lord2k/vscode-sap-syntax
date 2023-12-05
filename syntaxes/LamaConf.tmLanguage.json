@@ -2,13 +2,12 @@
   "name": "LamaConf",
   "scopeName": "source.lama.conf",
   "patterns": [
-    { "include": "source.sap.common#comment" },
     {
       "explanation": "Name",
       "match": "\\s*(Name\\s*:)\\s*(\\w+)",
       "captures": {
         "1": { "name": "keyword" },
-        "2": { "name": "constant.character.escape markup.bold" }
+        "2": { "name": "constant.character.escape support.function.builtin markup.bold" }
       }
     },
     {
@@ -19,8 +18,8 @@
         "2": { "name": "string" }
       }
     },
-    { "begin": "=?'", "end": "'", "name": "string.quoted.single" },
-    { "begin": "=?\"", "end": "\"", "name": "string.quoted.double" },
+    { "begin": "'", "end": "'", "name": "string.quoted.single" },
+    { "begin": "\"", "end": "\"", "name": "string.quoted.double" },
     {
       "explanation": "Keyword",
       "match": "^\\s*(\\w+:)",
@@ -40,30 +39,32 @@
         { "include": "#Params" }
       ]
     },
-    { "include": "#Params" },
     { "include": "#Commands" },
     { "include": "#Path" },
+    { "include": "#Params" },
     {
       "explanation": "Params",
       "match": "-[^\\s=]+",
       "name": "entity.other.attribute-name"
     },
-    { "match": "/?(\\S+/)+\\S*", "name": "string.path" }
+    { "match": "/?(\\S+/)+\\S*", "name": "string.path" },
+    { "include": "source.sap.common#all" }
   ],
   "repository": {
     "Commands": {
       "explanation": "environment markers",
-      "match": "(perl|bash|python|[ckz]?sh|mkdir|cd|rm|cp|ssh|hdblcm|find|sed|mv|wget|grep|saphostctrl|saphostexec?|su|chown|chmod|echo)\\s",
+      "match": "(perl|bash|python|[ckz]?sh|mkdir|cd|rm|cp|ssh|hdblcm|find|sed|mv|wget|grep|saphostctrl|saphostexec?|su|chown|chmod|echo|test|touch|stopsap|startsap|rm|ln|(?:un)?alias)\\s",
       "captures": {
         "1": { "name": "entity.name.command" }
       }
     },
     "Path": {
       "explanation": "path",
-      "match": "((?:/[\\w\\.-]+/)+)+(/[\\w\\.-]+)?;?",
+      "matchX": "((?:\\/[\\w\\.-]+\\/)+)+(\\/[\\w\\.-]+)?;?",
+      "match": "((?<=\\/|\")[<>\\w.-]+(?=\\/))",
       "captures": {
         "1": {
-          "name": "string.unquoted.path",
+          "name": "string.unquoted.path lc",
           "patterns": [{ "include": "source.sapinst.process#placeholder" }]
         },
         "2": { "name": "variable.parameter" }
@@ -73,25 +74,42 @@
       "patterns": [
         { "include": "#Commands" },
         { "include": "source.sapinst.process#placeholder" },
-        { "include": "#Path" },
+        { "include": "#Flags" },
         { "include": "#ParameterSimple" },
         { "include": "#ParameterLamaLong" },
         { "include": "#ParameterLamaShort" },
         {
           "explanation": "logical operators",
-          "match": "([\\&\\|<>=+]){1,2}",
+          "match": "([\\&\\|=+]){1,2}",
           "name": "keyword.operator.logic"
         },
         {
           "explanation": "regexp",
-          "match": "([\\&\\|]){1,2}",
-          "name": "keyword.operator.logic"
-        }
+          "match": "\"?([sm])(\\/)(.+?)(\\/)(?:(.+?)(\\/))?g?\"?",
+          "captures": {
+            "1": { "name": "markup.bold" },
+            "2": { "name": "markup.bold" },
+            "3": { "name": "support.function.builtin match", "patterns":[ { "include": "source.sapinst.process#placeholder" }] },
+            "4": { "name": "markup.bold" },
+            "5": { "name": "support.variable replace", "patterns":[ { "include": "source.sapinst.process#placeholder" }] },
+            "6": { "name": "markup.bold" }
+          },
+          "name": "keyword.operator.logic regexp"
+        },
+        { "include": "#Path" }
       ]
     },
+    "Flags": {
+      "explanation": "Flags --p -p",
+      "match": "(-+)([\\w\\.]+)\\s+(?!=)",
+      "captures": {
+        "1": { "name": "constant.other.option" },
+        "2": { "name": "constant.other.option" }
+      }
+    },
     "ParameterSimple": {
-      "explanation": "Params Simple",
-      "match": "([\\w\\-]+)\\s*([=\\s])\\s*([\\w<>/]+)?",
+      "explanation": "Params Simple p=v --p=v --p v",
+      "match": "([\\w\\-]+)\\s*([=\\s\\.])\\s*([\\w<>/\\.]+)",
       "captures": {
         "1": { "name": "markup.italic constant.other.option" },
         "2": { "name": "keyword.operator.comparison" },
@@ -102,22 +120,22 @@
     },
     "ParameterLamaShort": {
       "explanation": "Params with $[<val>:<name>?=#required]",
-      "match": "(?:\\$\\[([\\w\\-]*):?([\\w\\-]+)?(=)?((?:#\\w+)*)\\s*\\])",
+      "match": "(?:\\$\\[([\\w\\-\\.]*):?\\s*([\\w\\-\\.]+)?(=)?((?:#[\\w\\(\\)\\,\\.]+)*)\\s*\\])",
       "captures": {
         "1": { "name": "string.unquoted.argument" },
         "2": { "name": "markup.italic constant.other.option" },
         "3": { "name": "keyword.operator.comparison" },
-        "4": { "name": "variable.parameter " }
+        "4": { "name": "variable.parameter" }
       }
     },
     "ParameterLamaLong": {
       "explanation": "XM Params with <name>=$[]",
-      "match": "([\\w\\-]+)\\s*(=)\\s*\\$\\[([\\w\\-]+(:(?:#\\w+))?)\\s*\\]",
+      "match": "([\\w\\-\\.]+)\\s*(=)\\s*\\$\\[([\\w\\-\\.]+(:(?:#[\\w\\(\\)\\,\\.]+))?)\\s*\\]",
       "captures": { 
         "1": { "name": "markup.italic constant.other.option" },
         "2": { "name": "keyword.operator.comparison" },
         "3": { "name": "string.unquoted.argument" },
-        "4": { "name": "variable.parameter " }
+        "4": { "name": "variable.parameter" }
       }
     }
   }

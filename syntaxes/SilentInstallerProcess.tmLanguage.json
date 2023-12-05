@@ -10,6 +10,7 @@
       }
     },
     { "include": "source.sap.common#comment" },
+    { "include": "#commands" },
     { "include": "#files" },
     { "include": "#substitutions" },
     { "include": "#stringDouble" },
@@ -37,23 +38,57 @@
         }
       ]
     },
+    "commands": {
+      "explanation": "Commands 2",
+      "matchX": "(?x)^(COMMANDS_\\w+) | (\\[)(.*)(\\]) | (\\.) | ([\\w\\-]+)(=) | ((?<=\\.)\\w+) | (\")(.+)(\")",
+      "begin": "(?x)^(COMMANDS_[\\w-]+)",
+      "beginCaptures": {
+        "1":  { "name": "keyword" },
+        "5":  { "name": "punctuation.dot" },
+        "6":  { "name": "meta.1 variable.other" },
+        "8":  { "name": "meta.2 variable" },
+        "7":  { "name": "keyword.operator.comparison markup.bold" },
+        "9":  { "name": "punctuation.definition.bash.begin punctuation.definition.string.quoted.double.begin" },
+        "10": { "name": "meta.embedded.block.bash", "patterns": [{ "include": "source.lama.conf#Params" }] },
+        "11": { "name": "punctuation.definition.bash.end punctuation.definition.string.quoted.double.end" }
+      },
+      "end": "(\")(.+)(\")\n",
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.bash.begin punctuation.definition.string.quoted.double.begin" },
+        "2": { "name": "meta.embedded.block.bash", "patterns": [{ "include": "source.lama.conf#Params" }] },
+        "3": { "name": "punctuation.definition.bash.end punctuation.definition.string.quoted.double.end" }
+      },
+      "patterns": [
+        { "include": "#builtin" },
+        { "include": "#condition" },
+        {
+          "match": "(?x)(\\.) | ([\\w\\-]+)(=) | ((?<=\\.)\\w+)",
+          "captures": {
+            "1": { "name": "punctuation.dot" },
+            "2": { "name": "meta.1 variable.other" },
+            "3": { "name": "keyword.operator.comparison markup.bold" },
+            "4": { "name": "meta.2 variable" }
+          }
+        }
+      ]
+    },
     "files": {
       "patterns": [
         {
           "match": "(FILES_\\w+)(\\.)(.+?)(?:(\\.)(.+?))*(=)(\")(.*?),(.*?),(.*?),(.*?)(?:,(.*?))?(\")",
           "captures": {
-            "0": { "name": "punctuation.comma" },
-            "1": { "name": "keyword" },
-            "2": { "name": "punctuation.dot" },
-            "3": { "name": "meta.1 variable", "patterns":[{"include":"#placeholder"}] },
-            "4": { "name": "punctuation.dot" },
-            "5": { "name": "meta.2 variable", "patterns":[{"include":"#placeholder"}] },
-            "6": { "name": "keyword.operator.comparison markup.bold" },
-            "7": { "name": "punctuation.definition.string.quoted.double.begin" },
-            "8": { "name": "meta.filename constant.other.type", "patterns":[{"include":"#placeholder"}] },
-            "9": { "name": "meta.baseDir string.quoted.double", "patterns":[{"include":"#placeholder"}] },
-            "10": { "name": "meta.targetDir string.quoted.double", "patterns":[{"include":"#placeholder"}] },
-            "11": { "name": "meta.installDir string.quoted.double", "patterns":[{"include":"#placeholder"}] },
+            "0":  { "name": "punctuation.comma" },
+            "1":  { "name": "keyword" },
+            "2":  { "name": "punctuation.dot" },
+            "3":  { "name": "meta.1 variable", "patterns": [{ "include": "#placeholder" }] },
+            "4":  { "name": "punctuation.dot" },
+            "5":  { "name": "meta.2 variable", "patterns": [{ "include": "#placeholder" }] },
+            "6":  { "name": "keyword.operator.comparison markup.bold" },
+            "7":  { "name": "punctuation.definition.string.quoted.double.begin" },
+            "8":  { "name": "meta.filename constant.other.type", "patterns": [{ "include": "#placeholder" }] },
+            "9":  { "name": "meta.baseDir stringX.quoted.double", "patterns": [{ "include": "#placeholder" }, { "include": "source.sap.common#path" }] },
+            "10": { "name": "meta.targetDir stringX.quoted.double", "patterns": [{ "include": "#placeholder" }, { "include": "source.sap.common#path" }] },
+            "11": { "name": "meta.installDir stringX.quoted.double", "patterns": [{ "include": "#placeholder" }, { "include": "source.sap.common#path" }] },
             "12": { "name": "meta.type support.function.builtin" },
             "13": { "name": "punctuation.definition.string.quoted.double.begin" }
           }
@@ -72,15 +107,11 @@
             "4": { "name": "punctuation.dot" },
             "5": { "name": "meta.2 variable" },
             "6": { "name": "keyword.operator.comparison markup.bold" },
-            "7": {
-              "name": "punctuation.definition.bash.begin.sapinst.process string.quoted.double"
-            }
+            "7": { "name": "punctuation.definition.bash.begin.sapinst.process string.quoted.double" }
           },
           "end": "\"?\\n",
           "endCaptures": {
-            "0": {
-              "name": "punctuation.definition.bash.end.sapinst.process punctuation.terminator.statement.semicolon.shell"
-            },
+            "0": { "name": "punctuation.definition.bash.end.sapinst.process punctuation.terminator.statement.semicolon.shell" },
             "1": { "name": "source.sapinst.process" }
           },
           "patterns": [
@@ -88,9 +119,7 @@
               "contentNameX": "meta.embedded.block.bash meta.statement.command.shell",
               "begin": "(=)",
               "beginCaptures": {
-                "9": {
-                  "name": "meta.embedded.block.bash meta.statement.command.shell"
-                },
+                "9": { "name": "meta.embedded.block.bash meta.statement.command.shell" },
                 "1": { "name": "keyword.operator.comparison markup.bold" },
                 "2": { "name": "string.quoted.double punctuation.definition.bash.begin.sapinst.process" }
               },
@@ -105,17 +134,16 @@
                   "begin": "(\")",
                   "end": "(\")(?=[^\"]*$)",
                   "beginCaptures": {
-                    "0":{ "name": "meta.embedded.block.bash" },
-                    "1":{ "name": "punctuation.definition.bash.begin",
-                          "patterns":[
-                            { "include": "source.shell" }
-                          ]
-                        }
+                    "0": { "name": "meta.embedded.block.bash" },
+                    "1": {
+                      "name": "punctuation.definition.bash.begin",
+                      "patterns": [{ "include": "source.shell" }]
+                    }
                   },
                   "endCaptures": {
-                    "1":{"name": "punctuation.definition.bash.end" }
+                    "1": { "name": "punctuation.definition.bash.end" }
                   },
-                  "patterns":[
+                  "patterns": [
                     { "include": "#stringDouble" },
                     { "include": "source.lama.conf#Params" },
                     { "include": "#placeholder" },
@@ -154,9 +182,7 @@
           "match": "(\\.)(Execute|IfNot|If|Not|FileExists)",
           "captures": {
             "1": { "name": "punctuation.dot" },
-            "2": {
-              "name": "keyword.control support.function.builtin markup.italic"
-            }
+            "2": { "name": "keyword.control support.function.builtin markup.italic" }
           }
         }
       ]
@@ -166,17 +192,17 @@
         {
           "match": "(SUBSTITUTION_\\w+)(\\.)(.+?)(?:(\\.)(.+?))*(=)(\")(.*?),(.*?),(.*?)(?:,(.*?))?(\")",
           "captures": {
-            "0": { "name": "punctuation.comma" },
-            "1": { "name": "keyword" },
-            "2": { "name": "punctuation.dot" },
-            "3": { "name": "meta.1 variable", "patterns":[{"include":"#placeholder"}] },
-            "4": { "name": "punctuation.dot" },
-            "5": { "name": "meta.2 variable", "patterns":[{"include":"#placeholder"}] },
-            "6": { "name": "keyword.operator.comparison markup.bold" },
-            "7": { "name": "punctuation.definition.string.quoted.double.begin" },
-            "8": { "name": "meta.filename constant.other.type", "patterns":[{"include":"#placeholder"}] },
-            "9": { "name": "meta.placeholderNamer string.quoted.double", "patterns":[{"include":"#placeholder"}] },
-            "10": { "name": "meta.placeholderValue string.quoted.double", "patterns":[{"include":"#placeholder"}] },
+            "0":  { "name": "punctuation.comma" },
+            "1":  { "name": "keyword" },
+            "2":  { "name": "punctuation.dot" },
+            "3":  { "name": "meta.1 variable", "patterns": [{ "include": "#placeholder" }] },
+            "4":  { "name": "punctuation.dot" },
+            "5":  { "name": "meta.2 variable", "patterns": [{ "include": "#placeholder" }] },
+            "6":  { "name": "keyword.operator.comparison markup.bold" },
+            "7":  { "name": "punctuation.definition.string.quoted.double.begin" },
+            "8":  { "name": "meta.filename constant.other.type", "patterns": [{ "include": "#placeholder" }] },
+            "9":  { "name": "meta.placeholderNamer string.quoted.double", "patterns": [{ "include": "#placeholder" }] },
+            "10": { "name": "meta.placeholderValue string.quoted.double", "patterns": [{ "include": "#placeholder" }] },
             "11": { "name": "support.function.builtin" },
             "12": { "name": "punctuation.definition.string.quoted.double.begin" }
           }
@@ -198,15 +224,11 @@
         {
           "begin": "(?<!n)'",
           "beginCaptures": {
-            "0": {
-              "name": "punctuation.definition.string.quoted.single.begin.sapinst.process"
-            }
+            "0": { "name": "punctuation.definition.string.quoted.single.begin.sapinst.process" }
           },
           "end": "'(?<=')",
           "endCaptures": {
-            "0": {
-              "name": "punctuation.definition.string.quoted.single.end.sapinst.process"
-            }
+            "0": { "name": "punctuation.definition.string.quoted.single.end.sapinst.process" }
           },
           "name": "string.quoted.single",
           "patterns": [
@@ -223,15 +245,11 @@
         {
           "begin": "\"",
           "beginCaptures": {
-            "0": {
-              "name": "punctuation.definition.string.quoted.double.begin.sapinst.process"
-            }
+            "0": { "name": "punctuation.definition.string.quoted.double.begin.sapinst.process" }
           },
           "end": "\"(?<=\")",
           "endCaptures": {
-            "0": {
-              "name": "punctuation.definition.string.quoted.double.end.sapinst.process"
-            }
+            "0": { "name": "punctuation.definition.string.quoted.double.end.sapinst.process" }
           },
           "name": "string.quoted.double",
           "patterns": [

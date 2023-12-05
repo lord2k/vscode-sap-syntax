@@ -1,15 +1,20 @@
 {
   "name": "SapCommon",
   "scopeName": "source.sap.common",
-  "patterns": [{"include":"source.sap.common#all"}],
+  "patterns": [{ "include": "#all" }],
   "repository": {
     "all": {
       "patterns": [
-        {"include":"#comment"},
-        {"include":"#stringDouble"},
-        {"include":"#stringSingle"},
-        {"include":"#placeholder"}
-    ]
+        { "include": "#comment" },
+        { "include": "#main" },
+        { "include": "#condition" },
+        { "include": "#stringDouble" },
+        { "include": "#stringSingle" },
+        { "include": "#placeholder" },
+        { "include": "#params" },
+        { "include": "#path" },
+        { "include": "#last" }
+      ]
     },
     "comment": {
       "patterns": [
@@ -19,77 +24,127 @@
         },
         { "match": "\"?\\s*(#.*)$", "name": "comment markup.italic" }
       ]
+    },
+    "main": {
+      "match": "^\\s*(.+)(=)(.+)$",
+      "captures": {
+        "1": { "patterns": [{ "include": "#keys" }, { "include": "#all" }] },
+        "2": { "name": "keyword.operator.comparison" },
+        "3": { "patterns": [{ "include": "#all" }] }
+      }
+    },
+    "condition": {
+      "patterns": [
+        {
+          "begin": "(?<!\\\\)\\[",
+          "beginCaptures": {
+            "0": { "name": "constant.character.escape markup.bold" }
+          },
+          "end": "\\](?<=\\])",
+          "endCaptures": {
+            "0": { "name": "constant.character.escape markup.bold" }
+          },
+          "name": "entity.other.attribute-name markup.italic meta.condition",
+          "contentName": "string.unquoted markup.italic meta.condition",
+          "patterns": [{ "include": "#condition" }, { "include": "#params" }]
+        }
+      ]
+    },
+    "keys": {
+      "match": "(?x)^(\\w+)(?:(\\[)(.*)(\\]))? | (\\.)|(\\w+)",
+      "captures": {
+        "1": { "name": "keyword" },
+        "5": { "name": "punctuation.dot" },
+        "6": { "name": "meta.1 variable.other" },
+        "8": { "name": "meta.2 variable" }
+      }
+    },
+    "params": {
+      "match": "(?<optKey>[\\w\\-]*)\\s*([=<>!~]{1,2})\\s*(?<optVal>[\"']?[\\w\\-\\|\\.]*[\"']?)",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name" },
+        "2": { "name": "keyword.operator.comparison" },
+        "3": { "name": "entity.name.enum string.unquoted" }
+      }
+    },
+    "path": {
+      "explanation": "path",
+      "matchX": "((?:\\/[\\w\\.-]+\\/)+)+(\\/[\\w\\.-]+)?;?",
+      "match": "((?<=\\/|\")[<>\\w.-]+(?=\\/))",
+      "captures": {
+        "1": {
+          "name": "string.unquoted.path",
+          "patterns": [{ "include": "source.sapinst.process#placeholder" }]
+        },
+        "2": { "name": "variable.parameter" }
+      }
+    },
+    "placeholder": {
+      "patterns": [
+        {
+          "begin": "<(placeholder_)?",
+          "beginCaptures": {
+            "0": { "name": "entity.name.selector markup.bold" },
+            "1": { "name": "variable markup.italic" }
+          },
+          "end": ">(?<=>)",
+          "endCaptures": {
+            "0": { "name": "entity.name.selector markup.bold" }
+          },
+          "name": "entity.other.attribute-name markup.italic meta.placeholder",
+          "contentName": "entity.other.attribute-name markup.italic meta.placeholder",
+          "patterns": [
+            { "match": ",\\s*", "name": "punctuation.separator.comma" },
+            { "include": "#placeholder" }
+          ]
+        }
+      ]
+    },
+    "stringSingle": {
+      "patterns": [
+        { "match": "\\\\.", "name": "constant.character.escape" },
+        {
+          "begin": "'",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.quoted.single.begin"
+            }
+          },
+          "end": "'(?<=')",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.quoted.single.end"
+            }
+          },
+          "name": "string.quoted.single",
+          "patterns": [
+            { "include": "#placeholder" },
+            { "include": "#stringDouble" },
+            { "include": "$self" }
+          ]
+        }
+      ]
+    },
+    "stringDouble": {
+      "patterns": [
+        { "match": "\\\\.", "name": "constant.character.escape" },
+        {
+          "begin": "\"",
+          "beginCaptures": {
+            "0": { "name": "punctuation.definition.string.quoted.double.begin" }
+          },
+          "end": "\"(?<=\")",
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.string.quoted.double.end" }
+          },
+          "name": "string.quoted.double",
+          "patterns": [
+            { "include": "#placeholder" },
+            { "include": "#stringSingle" },
+            { "include": "$self" }
+          ]
+        }
+      ]
     }
-  },
-  "placeholder": {
-    "patterns": [
-      {
-        "begin": "<(placeholder_)?",
-        "beginCaptures": {
-          "0": { "name": "entity.name.selector markup.bold" },
-          "1": { "name": "variable markup.italic" }
-        },
-        "end": ">(?<=>)",
-        "endCaptures": {
-          "0": { "name": "entity.name.selector markup.bold" }
-        },
-        "name": "entity.other.attribute-name markup.italic meta.placeholder",
-        "contentName": "entity.other.attribute-name markup.italic meta.placeholder",
-        "patterns": [
-          { "match": ",\\s*", "name": "punctuation.separator.comma" },
-          { "include": "#placeholder" }
-        ]
-      }
-    ]
-  },
-  "stringSingle": {
-    "patterns": [
-      { "match": "\\\\.", "name": "constant.character.escape" },
-      {
-        "begin": "(?<!n)'",
-        "beginCaptures": {
-          "0": {
-            "name": "punctuation.definition.string.quoted.single.begin"
-          }
-        },
-        "end": "'(?<=')",
-        "endCaptures": {
-          "0": {
-            "name": "punctuation.definition.string.quoted.single.end"
-          }
-        },
-        "name": "string.quoted.single",
-        "patterns": [
-          { "include": "#placeholder" },
-          { "include": "#stringDouble" },
-          { "include": "$self" }
-        ]
-      }
-    ]
-  },
-  "stringDouble": {
-    "patterns": [
-      { "match": "\\\\.", "name": "constant.character.escape" },
-      {
-        "begin": "\"",
-        "beginCaptures": {
-          "0": {
-            "name": "punctuation.definition.string.quoted.double.begin"
-          }
-        },
-        "end": "\"(?<=\")",
-        "endCaptures": {
-          "0": {
-            "name": "punctuation.definition.string.quoted.double.end"
-          }
-        },
-        "name": "string.quoted.double",
-        "patterns": [
-          { "include": "#placeholder" },
-          { "include": "#stringSingle" },
-          { "include": "$self" }
-        ]
-      }
-    ]
   }
 }
