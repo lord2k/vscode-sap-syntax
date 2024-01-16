@@ -70,13 +70,22 @@
     "path": {
       "explanation": "path",
       "matchX": "((?:\\/[\\w\\.-]+\\/)+)+(\\/[\\w\\.-]+)?;?",
-      "match": "((?<=\\/|\")[<>\\w.-]+(?=\\/))",
+      "matchx": "((?<=\\/|\")[<>\\w.-]+(?=\\/))",
+      "match": "(\\~)?(\/([\\w.\\h-]+\/)*)([\\w.\\h-]+\/?)",
       "captures": {
         "1": {
-          "name": "string.unquoted.path",
+          "name": "string.unquoted.path markup.bold",
           "patterns": [{ "include": "source.sapinst.process#placeholder" }]
         },
-        "2": { "name": "variable.parameter" }
+        "2": { "name": "string.unquoted.path" ,
+          "patterns": [{ "include": "source.sapinst.process#placeholder" }]
+        },
+        "3": { "name": "string.unquoted.path" ,
+          "patterns": [{ "include": "source.sapinst.process#placeholder" }]
+        },
+        "4": { "name": "variable.parameter" ,
+          "patterns": [{ "include": "source.sapinst.process#placeholder" }]
+        }
       }
     },
     "placeholder": {
