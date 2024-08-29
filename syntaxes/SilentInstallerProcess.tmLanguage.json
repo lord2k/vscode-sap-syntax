@@ -277,12 +277,12 @@
         {
           "begin": "<(placeholder_)?",
           "beginCaptures": {
-            "0": { "name": "entity.name.selector markup.bold" },
+            "0": { "name": "entity.name.selector strong" },
             "1": { "name": "variable markup.italic" }
           },
           "end": ">(?<=>)",
           "endCaptures": {
-            "0": { "name": "entity.name.selector markup.bold" }
+            "0": { "name": "entity.name.selector strong" }
           },
           "name": "entity.other.attribute-name markup.italic meta.placeholder",
           "contentName": "entity.other.attribute-name markup.italic meta.placeholder",
@@ -297,7 +297,7 @@
       "patterns": [
         {
           "match": "\"?\\s*(###.*)$",
-          "name": "comment markup.italic markup.bold"
+          "name": "comment markup.italic strong"
         },
         { "match": "\"?\\s*(#.*)$", "name": "comment markup.italic" }
       ]
@@ -307,11 +307,11 @@
         {
           "begin": "(?<!\\\\)\\[",
           "beginCaptures": {
-            "0": { "name": "constant.character.escape markup.bold" }
+            "0": { "name": "constant.character.escape strong" }
           },
           "end": "\\](?<=\\])",
           "endCaptures": {
-            "0": { "name": "constant.character.escape markup.bold" }
+            "0": { "name": "constant.character.escape strong" }
           },
           "name": "entity.other.attribute-name markup.italic meta.condition",
           "contentName": "string.unquoted markup.italic meta.condition",
