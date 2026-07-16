@@ -15,6 +15,10 @@
     { "include": "#substitutions" },
     { "include": "#stringDouble" },
     { "include": "#lastBefore=" },
+    {
+      "match": "^(?!\\s*$)[^#=\\n]+$",
+      "name": "invalid.illegal"
+    },
     { "include": "#keys" },
     { "include": "#condition" }
   ],
@@ -165,7 +169,7 @@
             "1": { "name": "meta.definition.keyword.begin keyword.control" },
             "2": { "name": "punctuation.dot" }
           },
-          "end": "(\\.)",
+          "end": "(\\.)|$",
           "endCaptures": {
             "0": { "name": "meta.definition.keyword.end" },
             "1": { "name": "punctuation.dot" }
